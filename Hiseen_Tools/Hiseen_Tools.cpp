@@ -2,9 +2,10 @@
 //
 
 #include "stdafx.h"
+#include <iostream>
 #include "UnionFind.h"
 #include "Trie.h"
-
+#include "BinaryIndexedTree.h"
 using namespace Hiseen_Tools;
 
 int main()
@@ -22,6 +23,11 @@ int main()
 	t.Remove("apple");
 	t.Remove(a);
 	result = t.Search("apple");
+
+	BinaryIndexedTree<32, int> bit;
+	bit.Modify(1, 1);
+	bit.Modify(2, 1);
+	cout<<bit.GetSum(2);
     return 0;
 }
 

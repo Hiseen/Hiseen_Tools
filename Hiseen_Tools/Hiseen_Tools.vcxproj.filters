@@ -41,8 +41,5 @@
     <ClCompile Include="Hiseen_Tools.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryIndexedTree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
