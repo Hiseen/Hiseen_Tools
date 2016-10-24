@@ -2,18 +2,19 @@
 #include <cassert>
 namespace Hiseen_Tools
 {
+	template<typename T>
 	class SegmentTreeNode
 	{
 	public:
 		int left;
 		int right;
-		int cover;
-		SegmentTreeNode* lchild;
-		SegmentTreeNode* rchild;
-		static SegmentTreeNode* Create(int l, int r)
+		T data;
+		SegmentTreeNode<T>* lchild;
+		SegmentTreeNode<T>* rchild;
+		static SegmentTreeNode<T>* Create(int l, int r)
 		{
 			assert(r - l >= 1);
-			SegmentTreeNode* root = new SegmentTreeNode(l, r);
+			SegmentTreeNode<T>* root = new SegmentTreeNode<T>(l, r);
 			if (r - l == 1)
 				return root;
 			else if (r - l > 1)
@@ -24,64 +25,56 @@ namespace Hiseen_Tools
 			}
 			return root;
 		}
-		void Insert(int l, int r)
+		void Insert(int l, int r,const function<bool(SegmentTreeNode<T>* node,int l,int r)>& f)
 		{
 			assert(l >= left && r <= right);
-			if (left == l && right == r)
-			{
-				cover++;
-				return;
-			}
+
+			if (f(this, l, r))return;
 			int mid = left + ((right - left) >> 1);
 			if (r <= mid)
 			{
 				assert(lchild);
-				lchild->Insert(l, r);
+				lchild->Insert(l, r,f);
 			}
 			else if (l >= mid)
 			{
 				assert(rchild);
-				rchild->Insert(l, r);
+				rchild->Insert(l, r,f);
 			}
 			else
 			{
 				assert(lchild && rchild);
-				lchild->Insert(l, mid);
-				rchild->Insert(mid, r);
+				lchild->Insert(l, mid,f);
+				rchild->Insert(mid, r,f);
 			}
 		}
-		void Delete(int l, int r)
+		void Delete(int l, int r, const function<bool(SegmentTreeNode<T>* node, int l, int r)>& f)
 		{
 			assert(l >= left && r <= right);
-			if (left == l && right == r)
-			{
-				cover--;
-				return;
-			}
+			if (f(this, l, r))return;
 			int mid = left + ((right - left) >> 1);
 			if (r <= mid)
 			{
 				assert(lchild);
-				lchild->Delete(l, r);
+				lchild->Delete(l, r,f);
 			}
 			else if (l >= mid)
 			{
 				assert(rchild);
-				rchild->Delete(l, r);
+				rchild->Delete(l, r,f);
 			}
 			else
 			{
 				assert(lchild && rchild);
-				lchild->Delete(l, mid);
-				rchild->Delete(mid, r);
+				lchild->Delete(l, mid,f);
+				rchild->Delete(mid, r,f);
 			}
 		}
 	private:
-		SegmentTreeNode(int l = 0, int r = 0, int c = 0, SegmentTreeNode* lc = nullptr, SegmentTreeNode* rc = nullptr)
+		SegmentTreeNode<T>(int l = 0, int r = 0, SegmentTreeNode<T>* lc = nullptr, SegmentTreeNode<T>* rc = nullptr):data()
 		{
 			left = l;
 			right = r;
-			cover = c;
 			lchild = lc;
 			rchild = rc;
 		}
