@@ -6,11 +6,12 @@
 #include "UnionFind.h"
 #include "Trie.h"
 #include "BinaryIndexedTree.h"
+#include "SegmentTree.h"
 using namespace Hiseen_Tools;
 
 int main()
 {
-	Trie<26,char> t([](const char c) {return (int)(c - 'a'); });
+	Trie<26, char> t([](const char c) {return (int)(c - 'a'); }, [](int i) {return (char)(i + 'a'); });
 	t.Insert("apple");
 	t.Insert("banana");
 	t.Insert("opposite");
@@ -20,14 +21,20 @@ int main()
 	result = t.Search("banana");
 	result = t.Search(a);
 	t.Remove("ooooooo");
-	t.Remove("apple");
+	t.Insert("appooo");
+	t.Insert("apppqwe");
 	t.Remove(a);
 	result = t.Search("apple");
-
+	vector<string> re=t.GetSuffix("app");
 	BinaryIndexedTree<32, int> bit;
 	bit.Modify(1, 1);
 	bit.Modify(2, 1);
 	cout<<bit.GetSum(2);
+
+	SegmentTreeNode* root = SegmentTreeNode::Create(1, 100);
+	root->Insert(5, 20);
+	root->Insert(7, 70);
+
     return 0;
 }
 

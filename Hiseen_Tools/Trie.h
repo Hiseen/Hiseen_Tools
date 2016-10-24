@@ -52,6 +52,9 @@ namespace Hiseen_Tools
 			}
 			return node;
 		}
+
+
+
 		~TrieNode()
 		{
 			for (int i = 0; i < Size; ++i)
@@ -69,10 +72,11 @@ namespace Hiseen_Tools
 	class Trie
 	{
 	public:
-		Trie(const function<int(const T&)>& f)
+		Trie(const function<int(const T&)>& f, const function<T(int)>& r)
 		{
 			root = new TrieNode<Size>();
 			conversion = f;
+			reversion = r;
 		};
 
 		void Insert(const T t[])
@@ -142,6 +146,33 @@ namespace Hiseen_Tools
 			return node->IsEnd;
 		}
 
+		vector<vector<T>> GetSuffix(const T t[])
+		{
+			vector<vector<T>> res;
+			auto node = root;
+			int len = (sizeof(t) / sizeof(T));
+			for (int i = 0; i < len; ++i)
+			{
+				node = node->GetSubNode(conversion(t[i]));
+				if (!node)return res;
+			}
+			RecAdd(node, {}, res);
+			return res;
+		}
+
+		vector<vector<T>> GetSuffix(const vector<T>& t)
+		{
+			vector<vector<T>> res;
+			auto node = root;
+			int len = t.size();
+			for (int i = 0; i < len; ++i)
+			{
+				node = node->GetSubNode(conversion(t[i]));
+				if (!node)return res;
+			}
+			RecAdd(node, vector<T>{}, res);
+			return res;
+		}
 		~Trie()
 		{
 			if (root)
@@ -150,6 +181,22 @@ namespace Hiseen_Tools
 	private:
 		TrieNode<Size>* root;
 		function<int(const T&)> conversion;
+		function<T(int)> reversion;
+		void RecAdd(TrieNode<Size>* t, vector<T>& temp, vector<vector<T>>& res)
+		{
+			if (t->IsEnd)
+				res.push_back(temp);
+			for (int i = 0; i < Size; i++)
+			{
+				TrieNode<Size>* node = t->GetSubNode(i);
+				if (node)
+				{
+					vector<T> temp1(temp);
+					temp1.push_back(reversion(i));
+					RecAdd(node, temp1, res);
+				}
+			}
+		}
 	};
 
 	//ÌØ»¯char
@@ -157,10 +204,11 @@ namespace Hiseen_Tools
 	class Trie<Size, char>
 	{
 	public:
-		Trie(const function<int(const char)>& f)
+		Trie(const function<int(const char)>& f,const function<char(int)>& r)
 		{
 			root = new TrieNode<Size>();
 			conversion = f;
+			reversion = r;
 		};
 
 		void Insert(const char* t)
@@ -228,6 +276,32 @@ namespace Hiseen_Tools
 			}
 			return node->IsEnd;
 		}
+		vector<string> GetSuffix(const char* t)
+		{
+			vector<string> res;
+			auto node = root;
+			int len = strlen(t);
+			for (int i = 0; i < len; ++i)
+			{
+				node = node->GetSubNode(conversion(t[i]));
+				if (!node)return res;
+			}
+			RecAdd(node,string(""),res);
+			return res;
+		}
+		vector<string> GetSuffix(const string& s)
+		{
+			vector<string> res;
+			auto node = root;
+			int len = s.size();
+			for (int i = 0; i < len; ++i)
+			{
+				node = node->GetSubNode(conversion(s[i]));
+				if (!node)return res;
+			}
+			RecAdd(node, "", res);
+			return res;
+		}
 		~Trie()
 		{
 			if (root)
@@ -236,5 +310,21 @@ namespace Hiseen_Tools
 	private:
 		TrieNode<Size>* root;
 		function<int(const char)> conversion;
+		function<char(int)> reversion;
+		void RecAdd(TrieNode<Size>* t, string& temp, vector<string>& res)
+		{
+			if (t->IsEnd)
+				res.push_back(temp);
+			for (int i = 0; i < Size; i++)
+			{
+				TrieNode<Size>* node = t->GetSubNode(i);
+				if (node)
+				{
+					string temp1(temp);
+					temp1+=reversion(i);
+					RecAdd(node, temp1, res);
+				}
+			}
+		}
 	};
 }
