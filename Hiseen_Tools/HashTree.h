@@ -12,23 +12,36 @@ namespace Hiseen_Tools
 	public:
 		HashTree<T1,T2>(const function<int(const T1&)>& f):conversion(f)
 		{
+			size = 0;
 			root = new HashTreeNode<0, T1,T2>();
 		};
+
 		bool Insert(const T1& t1,const T2& t2)
 		{
 			auto ans = Search(t1);
 			if (ans && *ans == t2)return false;
-			return root->Insert(conversion(t1), t1, t2);
+			bool result=root->Insert(conversion(t1), t1, t2);
+			if (result)size++;
+			return result;
 		}
+
 		T2* Search(const T1& t1)
 		{
 			return root->Search(conversion(t1), t1);
 		}
+
 		bool Delete(const T1& t1)
 		{
 			auto ans = Search(t1);
 			if (!ans)return false;
-			return root->Delete(conversion(t1), t1);
+			bool result=root->Delete(conversion(t1), t1);
+			if (result)size--;
+			return result;
+		}
+
+		inline int GetSize()const
+		{
+			return size;
 		}
 
 		~HashTree<T1,T2>() 
@@ -144,6 +157,7 @@ namespace Hiseen_Tools
 		};
 		HashTreeNode<0, T1,T2>* root;
 		function<int(const T1&)> conversion;
+		unsigned long size;
 	};
 }
 

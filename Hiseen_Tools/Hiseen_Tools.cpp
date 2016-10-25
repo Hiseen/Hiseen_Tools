@@ -8,6 +8,7 @@
 #include "BinaryIndexedTree.h"
 #include "SegmentTree.h"
 #include "HashTree.h"
+#include "SplayTree.h"
 using namespace Hiseen_Tools;
 
 int main()
@@ -43,7 +44,14 @@ int main()
 	ht.Insert(12, 19);
 	ht.Insert(24, 355);
 
-
+	SplayTree<int> st;
+	st.Insert(100);
+	st.Insert(250);
+	st.Insert(350);
+	st.Search(100);
+	st.Search(200);
+	st.Delete(250);
+	st.Delete(500);
 
 
     return 0;
