@@ -9,6 +9,7 @@
 #include "SegmentTree.h"
 #include "HashTree.h"
 #include "SplayTree.h"
+#include "RedBlackTree.h"
 using namespace Hiseen_Tools;
 
 int main()
@@ -53,7 +54,14 @@ int main()
 	st.Delete(250);
 	st.Delete(500);
 
-
+	RedBlackTree<int> rbt;
+	for (int i = 0; i < 2000; i++)
+		rbt.Insert(i);
+	rbt.Search(250);
+	rbt.Search(125);
+	for (int i = 240; i >= 0; i--)
+		rbt.Delete(i);
+	
     return 0;
 }
 

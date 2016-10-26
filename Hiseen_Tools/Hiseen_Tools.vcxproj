@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="BinaryIndexedTree.h" />
     <ClInclude Include="HashTree.h" />
+    <ClInclude Include="RedBlackTree.h" />
     <ClInclude Include="SegmentTree.h" />
     <ClInclude Include="SplayTree.h" />
     <ClInclude Include="stdafx.h" />
