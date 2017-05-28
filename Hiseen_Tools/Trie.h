@@ -26,13 +26,12 @@ namespace Hiseen_Tools
 			assert(index < Size);
 			return children[index];
 		}
-		TrieNode<Size>* insert(int index, bool end = false)
+		TrieNode<Size>* insert(int index)
 		{
 			TrieNode<Size> *node = GetSubNode(index);
 			if (!node)
 				node = new TrieNode();
 			node->count++;
-			node->IsEnd = end;
 			children[index] = node;
 			return node;
 		}
@@ -86,6 +85,7 @@ namespace Hiseen_Tools
 			int len = (sizeof(t) / sizeof(T));
 			for (int i = 0; i < len; ++i)
 				node = node->insert(conversion(t[i]), i == len - 1);
+			node->IsEnd = true;
 		}
 		void Insert(const vector<T>& t)
 		{
@@ -94,6 +94,7 @@ namespace Hiseen_Tools
 			int len = t.size();
 			for (int i = 0; i < len; ++i)
 				node = node->insert(conversion(t[i]), i == len - 1);
+			node->IsEnd = true;
 		}
 
 		void Remove(const T t[])
@@ -218,6 +219,7 @@ namespace Hiseen_Tools
 			int len = strlen(t);
 			for (int i = 0; i < len; ++i)
 				node = node->insert(conversion(t[i]), i == len - 1);
+			node->IsEnd = true;
 		}
 		void Insert(const string& s)
 		{
@@ -226,6 +228,7 @@ namespace Hiseen_Tools
 			int len = s.size();
 			for (int i = 0; i < len; ++i)
 				node = node->insert(conversion(s[i]), i == len - 1);
+			node->IsEnd = true;
 		}
 
 		void Remove(const char* t)
