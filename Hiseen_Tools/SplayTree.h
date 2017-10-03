@@ -16,12 +16,14 @@ namespace Hiseen_Tools
 			SplayTreeNode<T>* right;
 			SplayTreeNode<T>* parent;
 			T value;
+			unsigned long count;
 			SplayTreeNode<T>(SplayTreeNode<T>* pre = nullptr, const T& t = T(), SplayTreeNode<T>* l = nullptr, SplayTreeNode<T>* r = nullptr)
 			{
 				parent = pre;
 				value = t;
 				left = l;
 				right = r;
+				count = 1;
 			}
 			~SplayTreeNode<T>()
 			{
@@ -34,12 +36,14 @@ namespace Hiseen_Tools
 		SplayTree() 
 		{
 			root = nullptr;
-			size = 0;
+			tree_size = 0;
+			element_count = 0;
 		};
 
-		bool Insert(const T& t)
+		void Insert(const T& t)
 		{
-			if (Search(t))return false;
+			auto temp = Search(t);
+			if (temp) { temp->count++; ++element_count; return; };
 			SplayTreeNode<T>* now = root;
 			SplayTreeNode<T>* pre = nullptr;
 			while (now)
@@ -53,8 +57,8 @@ namespace Hiseen_Tools
 			else if (comp(pre->value, now->value))pre->right = now;
 			else pre->left = now;
 			Splay(now);
-			size++;
-			return true;
+			++element_count;
+			++tree_size;
 		}
 
 		SplayTreeNode<T>* Search(const T& t)
@@ -91,7 +95,11 @@ namespace Hiseen_Tools
 				min->left = now->left;
 				min->left->parent = min;
 			}
-			size--;
+			element_count -= now->count;
+			--tree_size;
+			now->left = nullptr;
+			now->right = nullptr;
+			delete now;
 			return true;
 		}
 
@@ -178,7 +186,8 @@ namespace Hiseen_Tools
 		}
 		SplayTreeNode<T>* root;
 		Compare comp;
-		unsigned long size;
+		unsigned long tree_size;
+		unsigned long element_count;
 
 	};
 }

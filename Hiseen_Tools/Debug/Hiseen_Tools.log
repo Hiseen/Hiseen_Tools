@@ -1,3 +1,3 @@
 ﻿  Hiseen_Tools.cpp
-  Hiseen_Tools.vcxproj -> C:\Users\Sq\Documents\Visual Studio 2015\Projects\Hiseen_Tools\Debug\Hiseen_Tools.exe
-  Hiseen_Tools.vcxproj -> C:\Users\Sq\Documents\Visual Studio 2015\Projects\Hiseen_Tools\Debug\Hiseen_Tools.pdb (Full PDB)
+Hiseen_Tools.obj : error LNK2001: 无法解析的外部符号 "private: static struct std::less<int> Hiseen_Tools::RedBlackTree<int,struct std::less<int> >::comp" (?comp@?$RedBlackTree@HU?$less@H@std@@@Hiseen_Tools@@0U?$less@H@std@@A)
+C:\Users\Sq\Documents\Visual Studio 2015\Projects\Hiseen_Tools\Debug\Hiseen_Tools.exe : fatal error LNK1120: 1 个无法解析的外部命令

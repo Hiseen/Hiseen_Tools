@@ -147,7 +147,7 @@ namespace Hiseen_Tools
 			return node->IsEnd;
 		}
 
-		vector<vector<T>> GetSuffix(const T t[])
+		vector<vector<T>> GetWordsWithPrefix(const T t[])
 		{
 			vector<vector<T>> res;
 			auto node = root;
@@ -161,7 +161,7 @@ namespace Hiseen_Tools
 			return res;
 		}
 
-		vector<vector<T>> GetSuffix(const vector<T>& t)
+		vector<vector<T>> GetWordsWithPrefix(const vector<T>& t)
 		{
 			vector<vector<T>> res;
 			auto node = root;
@@ -279,7 +279,7 @@ namespace Hiseen_Tools
 			}
 			return node->IsEnd;
 		}
-		vector<string> GetSuffix(const char* t)
+		vector<string> GetWordsWithPrefix(const char* t)
 		{
 			vector<string> res;
 			auto node = root;
@@ -292,7 +292,7 @@ namespace Hiseen_Tools
 			RecAdd(node,string(""),res);
 			return res;
 		}
-		vector<string> GetSuffix(const string& s)
+		vector<string> GetWordsWithPrefix(const string& s)
 		{
 			vector<string> res;
 			auto node = root;

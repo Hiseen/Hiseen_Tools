@@ -149,6 +149,7 @@
     <ClInclude Include="HashTree.h" />
     <ClInclude Include="RedBlackTree.h" />
     <ClInclude Include="SegmentTree.h" />
+    <ClInclude Include="SizeBalancedTree.h" />
     <ClInclude Include="SplayTree.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
